@@ -1,0 +1,8 @@
+alldata <- read.csv("household_power_consumption.txt",sep =";", stringsAsFactors = FALSE)
+alldata$newdate <- with(alldata, as.POSIXct(paste(Date, Time), format="%d/%m/%Y %H:%M"))
+graphdata <- subset(alldata,newdate >= "2007-02-01" & newdate < "2007-02-03")
+graphdata$Global_active_power <- as.numeric(graphdata$Global_active_power)
+graphdata <- subset(graphdata, !is.na(Global_active_power))
+png(filename="Plot1.png")
+hist(graphdata$Global_active_power, col = "red", main ="Global Active Power", xlab = "Global Active Power (kilowatts)")
+dev.off()
